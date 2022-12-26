@@ -13,6 +13,8 @@ $excluded = Read-Host "Veuillez entrer les chemins des dossiers sources à exclu
 # Demander à l'utilisateur de saisir le chemin du dossier de destination
 $destination = Read-Host "Veuillez entrer le chemin du dossier de destination "
 
+$path = $destination;
+
 # Convertir la chaîne en tableau
 $sources = $sources -split ","
 
@@ -34,43 +36,71 @@ foreach ($source in $sources) {
     if ($excluded -notcontains $source) {
         "jpg", "png", "bmp", "heic" | ForEach-Object {
             $files = Get-ChildItem -Recurse $source -Filter "*.$_" | Where-Object {$excluded -notcontains $_.DirectoryName}
-            if ($choice -eq "1") {
-                # Copier les fichiers
-                foreach ($file in $files) {
-                    # Vérifier si le nom du fichier existe déjà dans le dossier de destination
-                    $target = "$destination\$($_.ToUpper())\$($file.Name)"
-                    if (Test-Path $target) {
-                        # Générer un nouveau nom de fichier en ajoutant un numéro d'index à la fin du nom
-                        $i = 1
-                        while (Test-Path $target) {
-                            $target = "$destination\$($_.ToUpper())\$($file.BaseName)_$i.$($file.Extension)"
-                            $i++
-                        }
-                    }
-                    # Copier le fichier
-                    $file | Copy-Item -Destination $target -Force | Out-Null
-                }
 
-           
-            } elseif ($choice -eq "2") {
-                # Déplacer les fichiers
-                foreach ($file in $files) {
-                    # Vérifier si le nom du fichier existe déjà dans le dossier de destination
-                    $target = "$destination\$($_.ToUpper())\$($file.Name)"
-                    if (Test-Path $target) {
-                        # Générer un nouveau nom de fichier en ajoutant un numéro d'index à la fin du nom
-                        $i = 1
-                        while (Test-Path $target) {
-                            $target = "$destination\$($_.ToUpper())\$($file.BaseName)_$i.$($file.Extension)"
-                            $i++
-                        }
-                    }
-                    # Déplacer le fichier
-                    $file | Move-Item -Destination $target -Force | Out-Null
-                }
+            if ($choice -eq "1") {
+    # Copier les fichiers
+    foreach ($file in $files) {
+        # Vérifier si le nom du fichier existe déjà dans le dossier de destination
+        $target = "$destination\$($_.ToUpper())\$($file.Name)"
+        if (Test-Path $target) {
+            # Générer un nouveau nom de fichier en ajoutant un numéro d'index à la fin du nom
+            $i = 1
+            while (Test-Path $target) {
+                $target = "$destination\$($_.ToUpper())\$($file.BaseName)_$i.$($file.Extension)"
+                $i++
             }
         }
+        # Copier le fichier
+        $file | Copy-Item -Destination $target -Force | Out-Null
+    }
+
+    # Demander à l'utilisateur s'il souhaite déplacer les éléments
+    $moveChoice = Read-Host "Voulez-vous déplacer les éléments maintenant ? (O/N)"
+    if ($moveChoice -eq "O") {
+        # Déplacer les fichiers
+        foreach ($file in $files) {
+            # Vérifier si le nom du fichier existe déjà dans le dossier de destination
+            $target = "$destination\$($_.ToUpper())\$($file.Name)"
+            if (Test-Path $target) {
+                # Générer un nouveau nom de fichier en ajoutant un numéro d'index à la fin du nom
+                $i = 1
+                while (Test-Path $target) {
+                    $target = "$destination\$($_.ToUpper())\$($file.BaseName)_$i.$($file.Extension)"
+                    $i++
+                }
+            }
+            # Déplacer le fichier
+            $file | Move-Item -Destination $target -Force | Out-Null
+        }
+
+# Vérifier si le chemin est valide
+if (!(Test-Path $path)) {
+    Write-Host "Le chemin est invalide. Veuillez réessayer." -ForegroundColor Red
+    return
+}
+
+# Récupérer tous les fichiers image dans le répertoire et ses sous-répertoires
+$files = Get-ChildItem -Recurse -Filter "*.jpg","*.png","*.bmp","*.heic" -Path $path
+
+# Créer un dictionnaire pour stocker les empreintes numériques des fichiers
+$hashDict = @{}
+
+# Parcourir tous les fichiers
+foreach ($file in $files) {
+    # Calculer l'empreinte numérique du fichier
+    $hash = (Get-FileHash -Algorithm MD5 $file.FullName).Hash
+
+    # Vérifier si l'empreinte numérique existe déjà dans le dictionnaire
+    if ($hashDict.ContainsKey($hash)) {
+        # Si oui, supprimer le fichier
+        $file | Remove-Item
+    } else {
+        # Si non, ajouter l'empreinte numérique au dictionnaire
+        $hashDict.Add($hash, $file.FullName)
     }
 }
 
+Write-Host "Suppression des doublons terminée." -ForegroundColor Green
 
+    }
+}
