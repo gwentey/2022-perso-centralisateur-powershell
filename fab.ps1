@@ -93,8 +93,6 @@ foreach ($frem in $imageFiles)
     # et doit être supprimé
     else
     {
-        # Affichez un message indiquant que le fichier est un doublon et sera supprimé
-        Write-Output "Doublon détecté : $($frem.FullName) sera supprimé"
 
         # Supprimez le fichier doublon
         Remove-Item -Path $frem.FullName
@@ -103,6 +101,7 @@ foreach ($frem in $imageFiles)
 
 
             }
+            break
         }
             elseif ($choice -eq "2") {
                 # Déplacer les fichiers
