@@ -51,39 +51,8 @@ foreach ($source in $sources) {
                     $file | Copy-Item -Destination $target -Force | Out-Null
                 }
 
-
-                # Demander à l'utilisateur s'il souhaite déplacer les fichiers
-                $move = Read-Host "Voulez-vous déplacer les fichiers copiés ? (O/N)"
-                if ($move -eq "O") {
-                    # Supprimer les fichiers copiés du dossier de destination
-                    foreach ($file in $files) {
-                        $target = "$destination\$($_.ToUpper())\$($file.Name)"
-                        if (Test-Path $target) {
-                            # Supprimer le fichier copié
-                            Remove-Item $target -Force | Out-Null
-                        }
-                    }
-                    # Déplacer les fichiers sources vers le dossier de destination
-                    foreach ($file in $files) {
-                        # Vérifier si le nom du fichier existe déjà dans le dossier de destination
-                        $target = "$destination\$($_.ToUpper())\$($file.Name)"
-                        if (Test-Path $target) {
-                            # Générer un nouveau nom de fichier en ajoutant un numéro d'index à la fin du nom
-                            $i = 1
-                            while (Test-Path $target) {
-                                $target = "$destination\$($_.ToUpper())\$($file.BaseName)_$i.$($file.Extension)"
-                                $i++
-                            }
-                        }
-                        # Déplacer le fichier
-                        $file | Move-Item -Destination $target -Force | Out-Null
-                    }
-                }
-            }
-
-
-
-            elseif ($choice -eq "2") {
+           
+            } elseif ($choice -eq "2") {
                 # Déplacer les fichiers
                 foreach ($file in $files) {
                     # Vérifier si le nom du fichier existe déjà dans le dossier de destination
