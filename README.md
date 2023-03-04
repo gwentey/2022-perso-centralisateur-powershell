@@ -23,5 +23,5 @@ Ce script est fourni tel quel, sans aucune garantie. L'utilisation de ce script 
  
 
 ## Contact
-
+ 
 Si vous avez des questions ou des commentaires sur ce script, n'hésitez pas à me contacter via mon portefolio https://anthony-rodrigues.fr/
