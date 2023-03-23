@@ -20,7 +20,7 @@ Tous droits réservés. Copyright (c) 2022 Anthony.
 
 Ce script est fourni tel quel, sans aucune garantie. L'utilisation de ce script est à vos propres risques. Nous ne sommes pas responsables de tout dommage causé par l'utilisation de ce script.
 
- 
+  
 ## Contact
  
 Si vous avez des questions ou des commentaires sur ce script, n'hésitez pas à me contacter via mon portefolio https://anthony-rodrigues.fr/
