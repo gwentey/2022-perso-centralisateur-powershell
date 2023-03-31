@@ -10,7 +10,7 @@ Ce script permet de copier ou de déplacer les fichiers image (jpg, png, bmp et 
  
 ## Note 
 
-Le script utilise la cmdlet PowerShell `Get-ChildItem` pour parcourir l'arborescence de l'ordinateur à la recherche de fichiers. Si vous rencontrez des problèmes d'autorisations lors de l'exécution du script, assurez-vous d'avoir les autorisations nécessaires pour accéder aux dossiers et aux fichiers ciblés.
+Le script utilise la cmdlet PowerShell `Get-ChildItem` pour parcourir l'arborescence de l'ordinateur à la recherche de fichiers. Si vous rencontrez des problèmes d'autorisations lors de l'exécution du script, assurez-vous d'avoir les autorisations nécessaires pour accéder aux dossiers et aux fichiers ciblés. 
 
 ## Copyright
 
