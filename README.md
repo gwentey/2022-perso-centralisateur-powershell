@@ -7,7 +7,7 @@ Ce script permet de copier ou de déplacer les fichiers  image (jpg, png, bmp et
 1. Ouvrez le script dans PowerShell  
 2. Suivez les instructions affichées à l'écran pour choisir une action (copier ou déplacer les fichiers), saisir les chemins des dossiers sources, les chemins des dossiers sources à exclure (facult atif) et le chemin  du dossier de destination.
 3. Le script parcourra l'arborescence de l'ordinateur à la recherche de fichiers image et effectuera l'opération choisie. Les fichiers seront classés par type dans des dossiers de destination respectifs (jpg, png, bmp et heic) dans le dossier de destination spécifié.
-      
+       
 ## Note  
       
 Le script utilise la cmdlet PowerShell `Get-ChildItem` pour parcourir l'arborescence de l'ordinateur à la recherche de fichiers. Si vous rencontrez des problèmes d'autorisations lors de l'exécution du script, assurez-vous d'avoir les autorisations nécessaires pour accéder aux dossiers et aux fichiers ciblés. 
